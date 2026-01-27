@@ -1,4 +1,4 @@
-/* 
+ 
 #Because don't want to get created again before we didn't remove # The File System
 resource "aws_efs_file_system" "postgres_data" {
   creation_token = "postgres-data"
@@ -38,4 +38,3 @@ resource "aws_efs_access_point" "postgres" {
     uid = 999
   }
 }
-*/
