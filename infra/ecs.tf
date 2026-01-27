@@ -78,7 +78,7 @@ command = [
       }
     }
   }])
-  /*
+  
     volume {
     name = "postgres-storage"
     efs_volume_configuration {
@@ -91,7 +91,7 @@ command = [
       root_directory = "/"
     }
   }
-  */
+
 }
 
 resource "aws_ecs_service" "main" {
