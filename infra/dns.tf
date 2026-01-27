@@ -19,7 +19,7 @@ resource "aws_service_discovery_service" "postgres_dns" {
   }
 
   # This helps AWS clean up old IPs quickly if a task restarts
-  health_check_custom_config {
-    failure_threshold = 1
-  }
+#  health_check_custom_config {
+#    failure_threshold = 1
+#  }
 }
