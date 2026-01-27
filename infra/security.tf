@@ -29,6 +29,6 @@ resource "aws_security_group" "efs_sg" {
     from_port       = 2049
     to_port         = 2049
     protocol        = "tcp"
-    #security_groups = [aws_security_group.db_sg.id] # Allow DB to talk to EFS
+    security_groups = [aws_security_group.db_sg.id] # Allow DB to talk to EFS
   }
 }
