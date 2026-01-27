@@ -1,4 +1,4 @@
-/*
+
 resource "aws_security_group" "db_sg" {
   name        = "postgres-sg"
   description = "Allow inbound traffic to Postgres"
@@ -20,7 +20,7 @@ resource "aws_security_group" "db_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
-*/
+
 resource "aws_security_group" "efs_sg" {
   name        = "efs-sg"
   vpc_id      = aws_vpc.main.id
