@@ -1,5 +1,5 @@
 # infra/imports.tf
 import {
-  to = aws_ecr_repository.your_repo_name
+  to = aws_ecr_repository.app
   id = "db-fargate-project-app"
 }
