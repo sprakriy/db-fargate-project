@@ -112,7 +112,7 @@ resource "aws_ecs_service" "main" {
   */
   network_configuration {
     subnets          = [aws_subnet.public_1.id, aws_subnet.public_2.id]
-  #  security_groups  = [aws_security_group.db_sg.id]
+    security_groups  = [aws_security_group.db_sg.id]
     assign_public_ip = true
   }
   service_registries {
