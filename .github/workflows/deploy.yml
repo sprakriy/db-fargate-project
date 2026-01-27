@@ -32,3 +32,6 @@ jobs:
 
       - name: Terraform Plan
         run: terraform plan
+      - name: Terraform Apply
+        # This makes it real. -auto-approve means no manual 'yes' needed.
+        run: terraform apply -auto-approve  
