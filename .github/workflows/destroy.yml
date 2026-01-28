@@ -14,6 +14,9 @@ jobs:
     permissions:
       id-token: write
       contents: read
+    defaults:
+      run:
+        working-directory: ./infra # <--- Change this to your folder name  
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
