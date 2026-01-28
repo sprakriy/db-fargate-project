@@ -1,0 +1,52 @@
+name: "Terraform Teardown"
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirmation:
+        description: 'To prevent accidents, type "DESTROY" to confirm'
+        required: true
+        type: string
+
+jobs:
+  terraform-destroy:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: us-east-1
+          
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ">=1.10.5"
+          terraform_wrapper: false # This is likely the missing link
+          aws-region: us-east-1
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          role-session-name: GitHubActionsSession
+
+      - name: Terraform Init
+        run: terraform init
+      - name: Remove OIDC and Role from Terraform State
+        run: |
+          terraform state rm aws_iam_openid_connect_provider.github
+          terraform state rm aws_iam_role.github_role
+        continue-on-error: true
+        
+      - name: Conditional Destroy
+        if: github.event.inputs.confirmation == 'DESTROY'
+        run: terraform destroy -auto-approve
+
+      - name: Security Alert
+        if: github.event.inputs.confirmation != 'DESTROY'
+        run: |
+          echo "::error::Destroy cancelled. Confirmation string did not match 'DESTROY'."
+          exit 1
